@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+
+const activeColor = Color(0xFF566de5);
+const inActiveColor = Color(0xFFffffff);
+
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
 
@@ -9,6 +13,38 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+
+  Color maleBoxColor = activeColor;
+  Color femaleBoxColor = inActiveColor;
+
+  int height = 180;
+
+  int weight = 60;
+  int age = 20;
+
+  void updateBoxColor(int gender){
+    if(gender == 1)
+      {
+        if(maleBoxColor == inActiveColor)
+          {
+            maleBoxColor = activeColor;
+            femaleBoxColor = inActiveColor;
+          }else{
+          maleBoxColor = inActiveColor;
+          femaleBoxColor = activeColor;
+        }
+      }
+    else{
+      if(femaleBoxColor == inActiveColor)
+      {
+        femaleBoxColor = activeColor;
+        maleBoxColor = inActiveColor;
+      }else{
+        femaleBoxColor = inActiveColor;
+        maleBoxColor = activeColor;
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,93 +91,111 @@ class _HomepageState extends State<Homepage> {
                   width: khaliW,
                 ),
                 Container(
-                  height: boxH,
-                  width: boxW,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5.0,
-                        blurRadius: 7.0,
-                        offset: Offset(0,3),
+                  child: GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        updateBoxColor(1);
+                      });
+                    },
+                    child: Container(
+                      height: boxH,
+                      width: boxW,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: maleBoxColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5.0,
+                              blurRadius: 7.0,
+                              offset: Offset(0,3),
+                            ),
+                          ]
                       ),
-                    ]
-                  ),
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: iconH,
-                          width: iconW,
-                          child: LayoutBuilder(builder: (context, constraint) {
-                            return new Icon(FontAwesomeIcons.mars, size: constraint.biggest.height);
-                          }),
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: iconH,
+                              width: iconW,
+                              child: LayoutBuilder(builder: (context, constraint) {
+                                return new Icon(FontAwesomeIcons.mars, size: constraint.biggest.height);
+                              }),
+                            ),
+                            Container(
+                              height: insideH,
+                              width: insideW,
+                            ),
+                            Container(
+                              height: textH,
+                              width: textW,
+                              child: AutoSizeText(
+                                "Male",
+                                style: TextStyle(fontSize: 30.0),
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          height: insideH,
-                          width: insideW,
-                        ),
-                        Container(
-                          height: textH,
-                          width: textW,
-                          child: AutoSizeText(
-                            "Male",
-                            style: TextStyle(fontSize: 30.0),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ), // male box
                 Container(
                   height: khaliH,
                   width: khaliW,
                 ),
                 Container(
-                  height: boxH,
-                  width: boxW,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5.0,
-                          blurRadius: 7.0,
-                          offset: Offset(0,3),
+                  child: GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        updateBoxColor(2);
+                      });
+                    },
+                    child: Container(
+                      height: boxH,
+                      width: boxW,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: femaleBoxColor,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 5.0,
+                              blurRadius: 7.0,
+                              offset: Offset(0,3),
+                            ),
+                          ]
+                      ),
+                      child: Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: iconH,
+                              width: iconW,
+                              child: LayoutBuilder(builder: (context, constraint) {
+                                return new Icon(FontAwesomeIcons.venus, size: constraint.biggest.height);
+                              }),
+                            ),
+                            Container(
+                              height: insideH,
+                              width: insideW,
+                            ),
+                            Container(
+                              height: textH,
+                              width: textW,
+                              child: AutoSizeText(
+                                "Female",
+                                style: TextStyle(fontSize: 30.0),
+                              ),
+                            ),
+                          ],
                         ),
-                      ]
-                  ),
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: iconH,
-                          width: iconW,
-                          child: LayoutBuilder(builder: (context, constraint) {
-                            return new Icon(FontAwesomeIcons.venus, size: constraint.biggest.height);
-                          }),
-                        ),
-                        Container(
-                          height: insideH,
-                          width: insideW,
-                        ),
-                        Container(
-                          height: textH,
-                          width: textW,
-                          child: AutoSizeText(
-                            "Female",
-                            style: TextStyle(fontSize: 30.0),
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
+                ), //female box
               ],
             ),
           ),
@@ -162,6 +216,45 @@ class _HomepageState extends State<Homepage> {
                       offset: Offset(0,3),
                     ),
                   ]
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  AutoSizeText(
+                    "Height",
+                    style: TextStyle(fontSize: 20.0,
+                    fontWeight: FontWeight.bold),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      AutoSizeText(
+                        height.toString(),
+                        style: TextStyle(fontSize: 30.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      AutoSizeText(
+                        "cm",
+                        style: TextStyle(fontSize: 16.0,),
+                      ),
+                    ],
+                  ),
+                  Slider(
+                      value: height.toDouble(),
+                      min: 120,
+                      max: 220,
+                      activeColor: activeColor,
+                    inactiveColor: inActiveColor,
+                    onChanged: (double newValue){
+                        setState(() {
+                          height = newValue.round();
+                        });
+                        height = newValue.round();
+                    },
+                  )
+                ],
               ),
             ),
           ),
@@ -188,6 +281,65 @@ class _HomepageState extends State<Homepage> {
                         ),
                       ]
                   ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AutoSizeText(
+                        "Weight",
+                        style: TextStyle(fontSize: 20.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          AutoSizeText(
+                            weight.toString(),
+                            style: TextStyle(fontSize: 30.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          AutoSizeText(
+                            "kg",
+                            style: TextStyle(fontSize: 16.0,),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FloatingActionButton.small(
+                            backgroundColor: activeColor,
+                              onPressed: (){
+                                setState(() {
+                                  weight++;
+                                });
+                              },
+                          child: Icon(
+                            FontAwesomeIcons.plus,
+                            color: Colors.white,
+                          ),
+                          ),
+                          SizedBox(width: sWidth*0.03,),
+                          FloatingActionButton.small(
+                            backgroundColor: activeColor,
+                            onPressed: (){
+                              setState(() {
+                                if(weight>0){
+                                  weight--;
+                                }
+                              });
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.minus,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    ],
+                  ),
                 ),
                 Container(
                   height: khaliH,
@@ -208,17 +360,116 @@ class _HomepageState extends State<Homepage> {
                         ),
                       ]
                   ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      AutoSizeText(
+                        "Age",
+                        style: TextStyle(fontSize: 20.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          AutoSizeText(
+                            age.toString(),
+                            style: TextStyle(fontSize: 30.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          AutoSizeText(
+                            "years",
+                            style: TextStyle(fontSize: 16.0,),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FloatingActionButton.small(
+                            backgroundColor: activeColor,
+                            onPressed: (){
+                              setState(() {
+                                age++;
+                              });
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.plus,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(width: sWidth*0.03,),
+                          FloatingActionButton.small(
+                            backgroundColor: activeColor,
+                            onPressed: (){
+                              setState(() {
+                                if(age>0){
+                                  age--;
+                                }
+                              });
+                            },
+                            child: Icon(
+                              FontAwesomeIcons.minus,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-          Container(
-            alignment: Alignment(0.0,0.99),
-            child: ElevatedButton(
-              onPressed: (){
-              },
-              child: Text("Results"),
 
+          GestureDetector(
+            onTap: (){
+              showDialog(context: context,
+              builder: (BuildContext context){
+                return Dialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Container(
+                    height: sHeight*0.5,
+                    margin: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        AutoSizeText("Result",
+                          style: TextStyle(fontSize: 20.0,
+                          fontWeight: FontWeight.bold),
+                        ),
+                        AutoSizeText("Result",
+                          style: TextStyle(fontSize: 20.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        AutoSizeText("Result",
+                          style: TextStyle(fontSize: 20.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+            },
+            child: Container(
+              alignment: Alignment(0.0, 1.0),
+              child: Container(
+                height: sHeight*0.08,
+                width: double.infinity,
+                color: activeColor,
+                child: Center(
+                  child: AutoSizeText(
+                    "Calculate",
+                    style: TextStyle(fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
             ),
           ),
         ],
