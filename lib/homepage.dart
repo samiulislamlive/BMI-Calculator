@@ -1,9 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 
 const activeColor = Color(0xFF566de5);
-const inActiveColor = Color(0xFFffffff);
+const inActiveColor = Color(0xFF212121);
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -18,10 +20,12 @@ class _HomepageState extends State<Homepage> {
   Color femaleBoxColor = inActiveColor;
 
   int height = 180;
-
   int weight = 60;
   int age = 20;
 
+  String result = "";
+  String resultDetail = "Result is here";
+  double bmi = 0;
   void updateBoxColor(int gender){
     if(gender == 1)
       {
@@ -43,6 +47,23 @@ class _HomepageState extends State<Homepage> {
         femaleBoxColor = inActiveColor;
         maleBoxColor = activeColor;
       }
+    }
+  }
+
+  String calculation(int height, int weight){
+    bmi = weight/pow(height/100, 2);
+    return bmi.toStringAsFixed(1);
+  }
+
+  String getresult(double bmi){
+    if(bmi >= 25){
+      return "You are overweight. Do some exercises";
+    }
+    else if(bmi>18.5){
+      return "You have normal bodyweight";
+    }
+    else{
+      return "You are underweight.Eat a bit more";
     }
   }
 
@@ -71,13 +92,13 @@ class _HomepageState extends State<Homepage> {
     double textW = sWidth*0.21256;
 
     return Scaffold(
-      backgroundColor: Color(0xFFf6f8ff),
+      backgroundColor: Color(0xFF000000),
       appBar: AppBar(
         title: Text("BMI Calculator",
         style: TextStyle(
-          color: Colors.black,
+            color: Colors.white,
         ),),
-        backgroundColor: Color(0xFFffffff),
+        backgroundColor: Color(0xFF000000),
         centerTitle: true,
       ),
       body: Stack(
@@ -105,7 +126,7 @@ class _HomepageState extends State<Homepage> {
                           color: maleBoxColor,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.grey.withOpacity(0.1),
                               spreadRadius: 5.0,
                               blurRadius: 7.0,
                               offset: Offset(0,3),
@@ -120,7 +141,7 @@ class _HomepageState extends State<Homepage> {
                               height: iconH,
                               width: iconW,
                               child: LayoutBuilder(builder: (context, constraint) {
-                                return new Icon(FontAwesomeIcons.mars, size: constraint.biggest.height);
+                                return new Icon(FontAwesomeIcons.mars,color: Colors.white ,size: constraint.biggest.height);
                               }),
                             ),
                             Container(
@@ -132,7 +153,9 @@ class _HomepageState extends State<Homepage> {
                               width: textW,
                               child: AutoSizeText(
                                 "Male",
-                                style: TextStyle(fontSize: 30.0),
+                                style: TextStyle(fontSize: 30.0,
+                                    color: Colors.white,
+                                ),
                               ),
                             ),
                           ],
@@ -160,7 +183,7 @@ class _HomepageState extends State<Homepage> {
                           color: femaleBoxColor,
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
+                              color: Colors.grey.withOpacity(0.1),
                               spreadRadius: 5.0,
                               blurRadius: 7.0,
                               offset: Offset(0,3),
@@ -175,7 +198,7 @@ class _HomepageState extends State<Homepage> {
                               height: iconH,
                               width: iconW,
                               child: LayoutBuilder(builder: (context, constraint) {
-                                return new Icon(FontAwesomeIcons.venus, size: constraint.biggest.height);
+                                return new Icon(FontAwesomeIcons.venus,color: Colors.white, size: constraint.biggest.height);
                               }),
                             ),
                             Container(
@@ -187,7 +210,9 @@ class _HomepageState extends State<Homepage> {
                               width: textW,
                               child: AutoSizeText(
                                 "Female",
-                                style: TextStyle(fontSize: 30.0),
+                                style: TextStyle(fontSize: 30.0,
+                                    color: Colors.white,
+                                ),
                               ),
                             ),
                           ],
@@ -207,10 +232,10 @@ class _HomepageState extends State<Homepage> {
               margin: EdgeInsets.all(15.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                color: Colors.white,
+                color: inActiveColor,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
+                      color: Colors.grey.withOpacity(0.1),
                       spreadRadius: 5.0,
                       blurRadius: 7.0,
                       offset: Offset(0,3),
@@ -223,6 +248,7 @@ class _HomepageState extends State<Homepage> {
                   AutoSizeText(
                     "Height",
                     style: TextStyle(fontSize: 20.0,
+                        color: Colors.white,
                     fontWeight: FontWeight.bold),
                   ),
                   Row(
@@ -233,11 +259,13 @@ class _HomepageState extends State<Homepage> {
                       AutoSizeText(
                         height.toString(),
                         style: TextStyle(fontSize: 30.0,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
                       AutoSizeText(
                         "cm",
-                        style: TextStyle(fontSize: 16.0,),
+                        style: TextStyle(fontSize: 16.0,
+                            color: Colors.white),
                       ),
                     ],
                   ),
@@ -271,10 +299,10 @@ class _HomepageState extends State<Homepage> {
                   width: boxW,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
+                    color: inActiveColor,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: Colors.grey.withOpacity(0.1),
                           spreadRadius: 5.0,
                           blurRadius: 7.0,
                           offset: Offset(0,3),
@@ -287,7 +315,8 @@ class _HomepageState extends State<Homepage> {
                       AutoSizeText(
                         "Weight",
                         style: TextStyle(fontSize: 20.0,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -297,11 +326,13 @@ class _HomepageState extends State<Homepage> {
                           AutoSizeText(
                             weight.toString(),
                             style: TextStyle(fontSize: 30.0,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                           AutoSizeText(
                             "kg",
-                            style: TextStyle(fontSize: 16.0,),
+                            style: TextStyle(fontSize: 16.0,
+                                color: Colors.white),
                           ),
                         ],
                       ),
@@ -332,7 +363,7 @@ class _HomepageState extends State<Homepage> {
                             },
                             child: Icon(
                               FontAwesomeIcons.minus,
-                              color: Colors.white,
+                                color: Colors.white,
                             ),
                           ),
                         ],
@@ -350,10 +381,10 @@ class _HomepageState extends State<Homepage> {
                   width: boxW,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
+                    color: inActiveColor,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
+                          color: Colors.grey.withOpacity(0.1),
                           spreadRadius: 5.0,
                           blurRadius: 7.0,
                           offset: Offset(0,3),
@@ -366,7 +397,8 @@ class _HomepageState extends State<Homepage> {
                       AutoSizeText(
                         "Age",
                         style: TextStyle(fontSize: 20.0,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -376,11 +408,13 @@ class _HomepageState extends State<Homepage> {
                           AutoSizeText(
                             age.toString(),
                             style: TextStyle(fontSize: 30.0,
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
                           ),
                           AutoSizeText(
                             "years",
-                            style: TextStyle(fontSize: 16.0,),
+                            style: TextStyle(fontSize: 16.0,
+                                color: Colors.white),
                           ),
                         ],
                       ),
@@ -426,34 +460,43 @@ class _HomepageState extends State<Homepage> {
 
           GestureDetector(
             onTap: (){
-              showDialog(context: context,
-              builder: (BuildContext context){
-                return Dialog(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Container(
-                    height: sHeight*0.5,
-                    margin: EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        AutoSizeText("Result",
-                          style: TextStyle(fontSize: 20.0,
-                          fontWeight: FontWeight.bold),
+              setState(() {
+                result = calculation(height, weight);
+                resultDetail = getresult(bmi);
+                showDialog(context: context,
+                    builder: (BuildContext context){
+                      return Dialog(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        AutoSizeText("Result",
-                          style: TextStyle(fontSize: 20.0,
-                              fontWeight: FontWeight.bold),
+                        child: Container(
+                          height: sHeight*0.5,
+                          color: inActiveColor,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AutoSizeText("Result",
+                                style: TextStyle(fontSize: 15.0,
+                                    color: Colors.white,
+                                ),
+                              ),
+                              AutoSizeText(result.toString(),
+                                style: TextStyle(fontSize: 25.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              AutoSizeText(resultDetail.toString(),
+                                style: TextStyle(fontSize: 15.0,
+                                    color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        AutoSizeText("Result",
-                          style: TextStyle(fontSize: 20.0,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                      );
+                    });
               });
+
             },
             child: Container(
               alignment: Alignment(0.0, 1.0),
